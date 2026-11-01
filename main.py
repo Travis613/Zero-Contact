@@ -17,6 +17,7 @@ PLAYER_HEIGHT = 50
 PLAYER_WIDTH = 50
 player_rect = pygame.Rect(player_x, player_y, PLAYER_HEIGHT, PLAYER_WIDTH)
 PLAYER_COLOR = (0, 0, 0)
+PLAYER_SPEED = 1
 
 def draw():
     WINDOW.fill(WINDOW_BACKGROUND_COLOR)
@@ -28,12 +29,24 @@ def draw():
 def main():
     running = True
     
+    global player_y
+    
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
                 
         draw()
+        
+        pressed_keys = pygame.key.get_pressed()
+        if pressed_keys[pygame.K_w] and player_rect.y >= 0:
+            player_rect[1] -= PLAYER_SPEED
+        elif pressed_keys[pygame.K_s] and player_rect.y + player_rect.height <= SCREEN_HEIGHT:
+            player_rect[1] += PLAYER_SPEED
+        elif pressed_keys[pygame.K_d] and player_rect.x <= SCREEN_WIDTH - player_rect.width - PLAYER_SPEED:
+            player_rect[0] += PLAYER_SPEED
+        elif pressed_keys[pygame.K_a] and player_rect.x >= 0:
+            player_rect[0] -= PLAYER_SPEED
                 
     pygame.quit()
     sys.exit()
