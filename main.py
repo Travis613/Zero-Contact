@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+from square import Square
+
 pygame.init()
 
 SCREEN_WIDTH = 1000
@@ -11,18 +13,14 @@ WINDOW_BACKGROUND_COLOR = (255, 255, 255)
 
 pygame.display.set_caption("Zero Contact")
 
-player_x = 475
-player_y = 350
-PLAYER_HEIGHT = 50
-PLAYER_WIDTH = 50
-player_rect = pygame.Rect(player_x, player_y, PLAYER_HEIGHT, PLAYER_WIDTH)
-PLAYER_COLOR = (0, 0, 0)
-PLAYER_SPEED = 1
+
+player = Square(475, 350, 50, 50, "BLACK", 1)
+player_rect = pygame.Rect(player.x, player.y, player.height, player.width)
 
 def draw():
     WINDOW.fill(WINDOW_BACKGROUND_COLOR)
     
-    pygame.draw.rect(WINDOW, PLAYER_COLOR, player_rect)
+    pygame.draw.rect(WINDOW, player.color, player_rect)
     
     pygame.display.update()
 
@@ -40,13 +38,13 @@ def main():
         
         pressed_keys = pygame.key.get_pressed()
         if pressed_keys[pygame.K_w] and player_rect.y >= 0:
-            player_rect[1] -= PLAYER_SPEED
+            player_rect[1] -= player.speed
         elif pressed_keys[pygame.K_s] and player_rect.y + player_rect.height <= SCREEN_HEIGHT:
-            player_rect[1] += PLAYER_SPEED
-        elif pressed_keys[pygame.K_d] and player_rect.x <= SCREEN_WIDTH - player_rect.width - PLAYER_SPEED:
-            player_rect[0] += PLAYER_SPEED
+            player_rect[1] += player.speed
+        elif pressed_keys[pygame.K_d] and player_rect.x <= SCREEN_WIDTH - player_rect.width - player.speed:
+            player_rect[0] += player.speed
         elif pressed_keys[pygame.K_a] and player_rect.x >= 0:
-            player_rect[0] -= PLAYER_SPEED
+            player_rect[0] -= player.speed
                 
     pygame.quit()
     sys.exit()
