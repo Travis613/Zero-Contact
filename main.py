@@ -14,8 +14,10 @@ WINDOW_BACKGROUND_COLOR = (255, 255, 255)
 
 pygame.display.set_caption("Zero Contact")
 
+clock = pygame.time.Clock()
 
-player = Square(475, 350, 50, 50, "BLACK", 1)
+
+player = Square(475, 350, 50, 50, "BLACK", 10)
 player_rect = pygame.Rect(player.x, player.y, player.height, player.width)
 
 enemy_x_spawn = list(range(0, 420)) + list(range(530, 950))
@@ -51,6 +53,8 @@ def main():
     global player_y
     
     while running:
+        clock.tick(60)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
