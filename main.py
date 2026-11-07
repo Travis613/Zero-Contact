@@ -51,19 +51,19 @@ while running:
     draw()
         
     pressed_keys = pygame.key.get_pressed()
-    if pressed_keys[pygame.K_w]:
+    if pressed_keys[pygame.K_w] or pressed_keys[pygame.K_UP]:
         player_rect.y -= PLAYER_SPEED
         if player_rect.y <= 0:
             player_rect.y = 0
-    elif pressed_keys[pygame.K_s]:
+    elif pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
         player_rect.y += PLAYER_SPEED
         if player_rect.y >= SCREEN_HEIGHT - player_rect.height:
             player_rect.y = SCREEN_HEIGHT - player_rect.height
-    elif pressed_keys[pygame.K_d]:
+    elif pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]:
         player_rect.x += PLAYER_SPEED
         if player_rect.x >= SCREEN_WIDTH - player_rect.width:
             player_rect.x = SCREEN_WIDTH - player_rect.width
-    elif pressed_keys[pygame.K_a]:
+    elif pressed_keys[pygame.K_a] or pressed_keys[pygame.K_LEFT]:
         player_rect.x -= PLAYER_SPEED
         if player_rect.x <= 0:
             player_rect.x = 0
