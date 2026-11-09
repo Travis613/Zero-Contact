@@ -22,16 +22,23 @@ PLAYER_SPEED = 5
 enemy_x_spawn = list(range(0, 420)) + list(range(530, 950))
 enemy_y_spawn = list(range(0, 340)) + list(range(410, 700))
 
-class Enemy(pygame.Rect):
-    def __init__(self, dx, dy):
-        self.rect = pygame.Rect.__init__(self, random.choice(enemy_x_spawn), random.choice(enemy_y_spawn), 50, 50)
+enemy1_rect = pygame.Rect(random.choice(enemy_x_spawn), random.choice(enemy_y_spawn), 50, 50)
+enemy2_rect = pygame.Rect(random.choice(enemy_x_spawn), random.choice(enemy_y_spawn), 50, 50)
+enemy3_rect = pygame.Rect(random.choice(enemy_x_spawn), random.choice(enemy_y_spawn), 50, 50)
+enemy4_rect = pygame.Rect(random.choice(enemy_x_spawn), random.choice(enemy_y_spawn), 50, 50)
+
+class Enemy():
+    def __init__(self, rect, dx, dy):
+        self.rect = rect
         self.enemy_speed_dx = dx
         self.enemy_speed_dy = dy
-        
-enemy1 = Enemy(random.choice([-5, 5]), random.choice([-5, 5]))
-enemy2 = Enemy(random.choice([-5, 5]), random.choice([-5, 5]))
-enemy3 = Enemy(random.choice([-5, 5]), random.choice([-5, 5]))
-enemy4 = Enemy(random.choice([-5, 5]), random.choice([-5, 5]))
+    
+enemy1 = Enemy(enemy1_rect, random.choice([-5, 5]), random.choice([-5, 5]))
+enemy2 = Enemy(enemy2_rect, random.choice([-5, 5]), random.choice([-5, 5]))
+enemy3 = Enemy(enemy3_rect, random.choice([-5, 5]), random.choice([-5, 5]))
+enemy4 = Enemy(enemy4_rect, random.choice([-5, 5]), random.choice([-5, 5]))
+
+enemies_rects = [enemy1.rect, enemy2.rect, enemy3.rect, enemy4.rect]
 
 def draw():
     WINDOW.fill(WINDOW_BACKGROUND_COLOR)
@@ -72,41 +79,44 @@ while running:
         if player_rect.x <= 0:
             player_rect.x = 0
             
-    enemy1.x += enemy1.enemy_speed_dx
-    enemy1.y += enemy1.enemy_speed_dy
+    enemy1.rect.x += enemy1.enemy_speed_dx
+    enemy1.rect.y += enemy1.enemy_speed_dy
     
-    if enemy1.x <= 0 or enemy1.x >= SCREEN_WIDTH - enemy1.width:
+    if enemy1.rect.x <= 0 or enemy1.rect.x >= SCREEN_WIDTH - enemy1.rect.width:
         enemy1.enemy_speed_dx *= -1
          
-    if enemy1.y <= 0 or enemy1.y >= SCREEN_HEIGHT - enemy1.height:
+    if enemy1.rect.y <= 0 or enemy1.rect.y >= SCREEN_HEIGHT - enemy1.rect.height:
         enemy1.enemy_speed_dy *= -1
         
-    enemy2.x += enemy2.enemy_speed_dx
-    enemy2.y += enemy2.enemy_speed_dy
+    enemy2.rect.x += enemy2.enemy_speed_dx
+    enemy2.rect.y += enemy2.enemy_speed_dy
         
-    if enemy2.x <= 0 or enemy2.x >= SCREEN_WIDTH - enemy2.width:
+    if enemy2.rect.x <= 0 or enemy2.rect.x >= SCREEN_WIDTH - enemy2.rect.width:
         enemy2.enemy_speed_dx *= -1
              
-    if enemy2.y <= 0 or enemy2.y >= SCREEN_HEIGHT - enemy2.height:
+    if enemy2.rect.y <= 0 or enemy2.rect.y >= SCREEN_HEIGHT - enemy2.rect.height:
         enemy2.enemy_speed_dy *= -1
         
-    enemy3.x += enemy3.enemy_speed_dx
-    enemy3.y += enemy3.enemy_speed_dy
+    enemy3.rect.x += enemy3.enemy_speed_dx
+    enemy3.rect.y += enemy3.enemy_speed_dy
         
-    if enemy3.x <= 0 or enemy3.x >= SCREEN_WIDTH - enemy3.width:
+    if enemy3.rect.x <= 0 or enemy3.rect.x >= SCREEN_WIDTH - enemy3.rect.width:
         enemy3.enemy_speed_dx *= -1
              
-    if enemy3.y <= 0 or enemy3.y >= SCREEN_HEIGHT - enemy3.height:
+    if enemy3.rect.y <= 0 or enemy3.rect.y >= SCREEN_HEIGHT - enemy3.rect.height:
         enemy3.enemy_speed_dy *= -1
         
-    enemy4.x += enemy4.enemy_speed_dx
-    enemy4.y += enemy4.enemy_speed_dy
+    enemy4.rect.x += enemy4.enemy_speed_dx
+    enemy4.rect.y += enemy4.enemy_speed_dy
         
-    if enemy4.x <= 0 or enemy4.x >= SCREEN_WIDTH - enemy4.width:
+    if enemy4.rect.x <= 0 or enemy4.rect.x >= SCREEN_WIDTH - enemy4.rect.width:
         enemy4.enemy_speed_dx *= -1
              
-    if enemy4.y <= 0 or enemy4.y >= SCREEN_HEIGHT - enemy4.height:
+    if enemy4.rect.y <= 0 or enemy4.rect.y >= SCREEN_HEIGHT - enemy4.rect.height:
         enemy4.enemy_speed_dy *= -1
+
+    if player_rect.collidelist(enemies_rects) != -1:
+        running = False
 
 pygame.quit()
 sys.exit()
