@@ -32,6 +32,16 @@ class Enemy():
         self.rect = rect
         self.enemy_speed_dx = dx
         self.enemy_speed_dy = dy
+        
+    def move(self):
+        self.rect.x += self.enemy_speed_dx
+        self.rect.y += self.enemy_speed_dy
+        
+        if self.rect.x <= 0 or self.rect.x >= SCREEN_WIDTH - self.rect.width:
+            self.enemy_speed_dx *= -1
+                 
+        if self.rect.y <= 0 or self.rect.y >= SCREEN_HEIGHT - self.rect.height:
+            self.enemy_speed_dy *= -1
     
 enemy1 = Enemy(enemy1_rect, random.choice([-5, 5]), random.choice([-5, 5]))
 enemy2 = Enemy(enemy2_rect, random.choice([-5, 5]), random.choice([-5, 5]))
@@ -79,41 +89,10 @@ while running:
         if player_rect.x <= 0:
             player_rect.x = 0
             
-    enemy1.rect.x += enemy1.enemy_speed_dx
-    enemy1.rect.y += enemy1.enemy_speed_dy
-    
-    if enemy1.rect.x <= 0 or enemy1.rect.x >= SCREEN_WIDTH - enemy1.rect.width:
-        enemy1.enemy_speed_dx *= -1
-         
-    if enemy1.rect.y <= 0 or enemy1.rect.y >= SCREEN_HEIGHT - enemy1.rect.height:
-        enemy1.enemy_speed_dy *= -1
-        
-    enemy2.rect.x += enemy2.enemy_speed_dx
-    enemy2.rect.y += enemy2.enemy_speed_dy
-        
-    if enemy2.rect.x <= 0 or enemy2.rect.x >= SCREEN_WIDTH - enemy2.rect.width:
-        enemy2.enemy_speed_dx *= -1
-             
-    if enemy2.rect.y <= 0 or enemy2.rect.y >= SCREEN_HEIGHT - enemy2.rect.height:
-        enemy2.enemy_speed_dy *= -1
-        
-    enemy3.rect.x += enemy3.enemy_speed_dx
-    enemy3.rect.y += enemy3.enemy_speed_dy
-        
-    if enemy3.rect.x <= 0 or enemy3.rect.x >= SCREEN_WIDTH - enemy3.rect.width:
-        enemy3.enemy_speed_dx *= -1
-             
-    if enemy3.rect.y <= 0 or enemy3.rect.y >= SCREEN_HEIGHT - enemy3.rect.height:
-        enemy3.enemy_speed_dy *= -1
-        
-    enemy4.rect.x += enemy4.enemy_speed_dx
-    enemy4.rect.y += enemy4.enemy_speed_dy
-        
-    if enemy4.rect.x <= 0 or enemy4.rect.x >= SCREEN_WIDTH - enemy4.rect.width:
-        enemy4.enemy_speed_dx *= -1
-             
-    if enemy4.rect.y <= 0 or enemy4.rect.y >= SCREEN_HEIGHT - enemy4.rect.height:
-        enemy4.enemy_speed_dy *= -1
+    enemy1.move()
+    enemy2.move()
+    enemy3.move()
+    enemy4.move()
 
     if player_rect.collidelist(enemies_rects) != -1:
         running = False
