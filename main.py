@@ -3,6 +3,7 @@ import sys
 import random
 
 pygame.init()
+pygame.font.init()
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 750
@@ -15,6 +16,10 @@ PLAYER_SPEED = 5
 
 WINDOW = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 WINDOW_BACKGROUND_COLOR = (255, 255, 255)
+
+FONT = pygame.font.Font(None, 48)
+
+TEXT_COLOR = (0, 0, 0)
 
 pygame.display.set_caption("Zero Contact")
 
@@ -81,9 +86,15 @@ def move():
     enemy2.move()
     enemy3.move()
     enemy4.move()            
-
+    
+def calculateTime():
+    currentTime = pygame.time.get_ticks()
+    return(f"elasped time: {round(currentTime / 1000)}")
 
 def draw():
+    textSurface = FONT.render(calculateTime(), True, TEXT_COLOR)
+    textRect = textSurface.get_rect(topleft=(10, 10))
+
     WINDOW.fill(WINDOW_BACKGROUND_COLOR)
     
     pygame.draw.rect(WINDOW, "black", player)
@@ -93,8 +104,11 @@ def draw():
     pygame.draw.rect(WINDOW, "green", enemy3)
     pygame.draw.rect(WINDOW, "purple", enemy4)
     
+    WINDOW.blit(textSurface, textRect)
+    
 def runGame():
     running = True
+    startingTime = pygame.time.get_ticks()
     
     while running:
         for event in pygame.event.get():
