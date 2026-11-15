@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import time
 
 pygame.init()
 pygame.font.init()
@@ -89,7 +90,7 @@ def move():
     
 def calculateTime():
     currentTime = pygame.time.get_ticks()
-    return(f"elasped time: {round(currentTime / 1000)}")
+    return(f"Time: {round(currentTime / 1000)}")
 
 def draw():
     textSurface = FONT.render(calculateTime(), True, TEXT_COLOR)
@@ -108,7 +109,6 @@ def draw():
     
 def runGame():
     running = True
-    startingTime = pygame.time.get_ticks()
     
     while running:
         for event in pygame.event.get():
@@ -116,6 +116,7 @@ def runGame():
                 running = False
                 
         if player.collidelist(enemies_rects) != -1:
+            time.sleep(3)
             running = False
         
         move()
