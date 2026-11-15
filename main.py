@@ -22,9 +22,13 @@ FONT = pygame.font.Font(None, 48)
 
 TEXT_COLOR = (0, 0, 0)
 
+running = True
+
 pygame.display.set_caption("Zero Contact")
 
 clock = pygame.time.Clock()
+
+playerHit = False
 
 enemy_x_spawn = list(range(0, 420)) + list(range(530, 950))
 enemy_y_spawn = list(range(0, 340)) + list(range(410, 700))
@@ -93,8 +97,11 @@ def calculateTime():
     return(f"Time: {round(currentTime / 1000)}")
 
 def draw():
-    textSurface = FONT.render(calculateTime(), True, TEXT_COLOR)
-    textRect = textSurface.get_rect(topleft=(10, 10))
+    timeSurface = FONT.render(calculateTime(), True, TEXT_COLOR)
+    timeRect = timeSurface.get_rect(topleft=(10, 10))
+    
+    loseSurface = FONT.render(f"Final {calculateTime()}", True, TEXT_COLOR)
+    loseRect = loseSurface.get_rect(center=(500, 350))
 
     WINDOW.fill(WINDOW_BACKGROUND_COLOR)
     
@@ -105,28 +112,35 @@ def draw():
     pygame.draw.rect(WINDOW, "green", enemy3)
     pygame.draw.rect(WINDOW, "purple", enemy4)
     
-    WINDOW.blit(textSurface, textRect)
+    if playerHit == False:
+        WINDOW.blit(timeSurface, timeRect)
     
-def runGame():
-    running = True
+    if playerHit == True:
+        WINDOW.blit(loseSurface, loseRect)
+    
+    pygame.display.update()
+    
+def runGame(running):
     
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
                 
-        if player.collidelist(enemies_rects) != -1:
-            time.sleep(3)
-            running = False
-        
         move()
         draw()
+                
+        if player.collidelist(enemies_rects) != -1:
+            running = False
+            global playerHit
+            playerHit = True
+            draw()
+            time.sleep(3)       
         
-        pygame.display.update()
         clock.tick(60)
         
 if __name__ == "__main__":
-    runGame()
+    runGame(running)
 
 pygame.quit()
 sys.exit()
